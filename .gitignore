@@ -3,6 +3,10 @@
 
 # Test files
 #*.txt
+client.txt
+server.txt
+oneWayDelays.txt
+packet_counts.txt
 *.png
 
 # Byte-compiled / optimized / DLL files
