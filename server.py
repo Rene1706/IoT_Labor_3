@@ -58,3 +58,5 @@ while True:
 	if args.udp:
 		data, address = sock.recvfrom(BUFFER_SIZE)
 		print(data)
+
+	mprocess.stdin.write(data)

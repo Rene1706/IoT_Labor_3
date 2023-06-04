@@ -44,8 +44,8 @@ if args.tcp:
 
 # Sende immer wieder "Hello" an den Server
 while True:
-    message = "Hello"
-        
+    #message = "Hello"
+    message = rasprocess.stdout.read(BUFFER_SIZE)   
     # TCP
     if args.tcp:
         sock.send(message.encode())
