@@ -10,8 +10,8 @@ parser.add_argument('--cmd', type=str, default="mplayer -fps 25 -cache 512 -", h
 args = parser.parse_args()
 
 # mediaplayer cmd command
-#cmd_mplayer = args.cmd
-#mprocess = subprocess.Popen(cmd_mplayer, shell=True, stdin=subprocess.PIPE)
+cmd_mplayer = args.cmd
+mprocess = subprocess.Popen(cmd_mplayer, shell=True, stdin=subprocess.PIPE)
 
 # Port des Servers
 PORT = 5000
@@ -59,4 +59,4 @@ while True:
 		data, address = sock.recvfrom(BUFFER_SIZE)
 		print(data)
 
-	#mprocess.stdin.write(data)
+	mprocess.stdin.write(data)

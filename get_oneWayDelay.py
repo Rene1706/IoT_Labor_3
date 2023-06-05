@@ -27,28 +27,38 @@ def calculate_one_way_delay(client_file, server_file, output_file):
     # Write the one-way delays to the output file
     with open(output_file, 'w') as file:
         for sequence_number, one_way_delay in one_way_delays:
-            file.write(f"{sequence_number},{one_way_delay}\n")
+            pass
+	    #file.write(f"{sequence_number},{one_way_delay}\n")
 
 
 def calculate_packet_counts(client_file, server_file, output_file):
-    packet_counts = defaultdict(lambda: [0, 0])  # Dictionary to store packet counts per timestamp
-
+    client_counts = [(0,0)]
+    server_counts = [(0,0)]
     # Read client.txt file and count client packets
     with open(client_file, 'r') as file:
         for line in file:
-            timestamp, _, _, _ = line.split('\t')
-            packet_counts[timestamp][0] += 1
+            c_timestamp, _, _, c_seq = line.split()
+            if c_seq != "1":
+                client_counts.append((c_timestamp, c_seq))
 
     # Read server.txt file and count server packets
     with open(server_file, 'r') as file:
         for line in file:
-            timestamp, _, _, _ = line.split('\t')
-            packet_counts[timestamp][1] += 1
-
+            s_timestamp, _, _, s_seq = line.split()
+            if c_seq != "1":
+                server_counts.append((s_timestamp, s_seq))
+    del server_counts[0]
+    del client_counts[0]
+    print(len(server_counts))
+    print(len(client_counts))
     # Write packet counts to output file
-    with open(output_file, 'w') as file:
-        for timestamp, counts in sorted(packet_counts.items()):
-            file.write(f"{timestamp}\t{counts[0]}\t{counts[1]}\n")
+    with open("server_packet_count.txt", 'w') as file:
+        for item in server_counts:
+            file.write(f"{item[0]}\t{item[1]}\n")
+    with open("client_packet_count.txt", 'w') as file:
+        for item in client_counts:
+            file.write(f"{item[0]}\t{item[1]}\n")
+
 
 # Specify the input file paths and output file path
 client_file = 'client.txt'
