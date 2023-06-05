@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Step 1: Get the file client.pcap from the remote Raspberry Pi using scp
-scp pi@192.168.1.30:/home/pi/Documents/IoT_Labor_3/client.pcap /home/student/Documents/Group03/IoT_Labor_3/
+#scp pi@192.168.1.30:/home/pi/Documents/IoT_Labor_3/client.pcap /home/student/Documents/Group03/IoT_Labor_3/
 
 # Step 2: Process .pcap files into .txt files with sequence number and timestamp
 #tshark -r client.pcap -Y "tcp.flags == 0x010 && ip.src == 192.168.1.30 && ip.dst == 192.168.1.33" -T fields -e frame.time_epoch -e ip.src -e ip.dst -e tcp.seq > client.txt
