@@ -1,34 +1,35 @@
 from collections import defaultdict
-
+import numpy as np
 def calculate_one_way_delay(client_file, server_file, output_file):
     # Read the client.txt file
     client_data = []
-    with open(client_file, 'r') as file:
+    server_data = []
+
+    with open("client_packet_count.txt", 'r') as file:
         for line in file:
-            timestamp, _, _, sequence_number = line.split('\t')
+            timestamp, sequence_number = line.strip().split('\t')
             client_data.append((float(timestamp), int(sequence_number)))
 
     # Read the server.txt file
     server_data = []
-    with open(server_file, 'r') as file:
+    with open("server_packet_count.txt", 'r') as file:
         for line in file:
-            timestamp, _, _, sequence_number = line.split('\t')
+            timestamp, sequence_number = line.strip().split('\t')
             server_data.append((float(timestamp), int(sequence_number)))
 
-    # Calculate one-way delay for each sequence number
     one_way_delays = []
-    for server_entry in server_data:
-        server_timestamp, sequence_number = server_entry
-        client_timestamp = next((client_entry[0] for client_entry in client_data if client_entry[1] == sequence_number), None)
-        if client_timestamp is not None:
-            one_way_delay = server_timestamp - client_timestamp
-            one_way_delays.append((sequence_number, one_way_delay))
-
-    # Write the one-way delays to the output file
-    with open(output_file, 'w') as file:
-        for sequence_number, one_way_delay in one_way_delays:
-            pass
-	    #file.write(f"{sequence_number},{one_way_delay}\n")
+    # Calculate one-way delay for each sequence number
+    for client_entry in client_data:
+        client_timestamp, client_sequence_number = client_entry
+        for server_entry in server_data:
+            server_timestamp, server_sequence_number = server_entry
+            if server_sequence_number == client_sequence_number:
+                one_way_delays.append(client_timestamp-server_timestamp)
+                break
+    #print(one_way_delays)
+    print("MEAN:", np.mean(one_way_delays[:4000]))
+    print("STD:", np.std(one_way_delays[:4000]))
+    return one_way_delays
 
 
 def calculate_packet_counts(client_file, server_file, output_file):
