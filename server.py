@@ -17,7 +17,7 @@ mprocess = subprocess.Popen(cmd_mplayer, shell=True, stdin=subprocess.PIPE)
 PORT = 5000
 
 # Lesepuffergroesse
-BUFFER_SIZE = 1400
+BUFFER_SIZE = 4000
 
 # Unterstuetzte Addresstypen (IPv4, IPv6, lokale Addressen)
 address_families = (socket.AF_INET, socket.AF_INET6, socket.AF_UNIX)

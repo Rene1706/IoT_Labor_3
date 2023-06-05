@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #Run tcpdump to sniff tcp traffic
-sudo tcpdump -n -i enp3s0 tcp -w server.pcap &
+sudo tcpdump -n -i wlp4s0 udp -w server.pcap &
 
 # Save the process ID (PID) of the tcpdump process
 pid_tcpdump=$!
 
 # Run the Python script in the background
-python server.py --tcp &
+python server.py --udp &
 
 # Save the process ID (PID) of the Python script
 pid_python=$!
